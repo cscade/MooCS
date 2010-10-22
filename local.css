@@ -1,0 +1,16 @@
+/* @override http://www.moocs.com/local.css */
+
+div.stackLeft {
+	float: left;
+	font: 12px "Lucida Grande", Lucida, Verdana, sans-serif;
+	margin: 4px;
+}
+
+div.stackLeft span {
+	font-weight: bold;
+}
+
+#refresh {
+	display: block;
+	clear: both;
+}
