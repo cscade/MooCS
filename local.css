@@ -14,3 +14,11 @@ div.stackLeft span {
 	display: block;
 	clear: both;
 }
+
+div.section {
+	border: 1px solid #d3dadc;
+	margin-bottom: 6px;
+	margin-top: 6px;
+	padding-left: 10px;
+	background-color: #f4fdfe;
+}
