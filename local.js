@@ -6,7 +6,7 @@ window.addEvent('domready', function () {
 		keys.each(function (key) {
 			BCS.Comm.read(section, key, function (response) {
 				document.body.grab(new Element('p', {
-					text: key + ': ' + response
+					html: key + ': <strong>' + response + '</strong>'
 				}));
 			});
 		});
