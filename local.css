@@ -1,12 +1,28 @@
 /* @override http://www.moocs.com/local.css */
 
-div.stackLeft {
-	float: left;
+body {
+	font: 12px "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+h1 {
+	font-size: 22px;
+	color: #143266;
+}
+
+h1 em {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	color: #2a64ca;
+	font-style: normal;
+	font-weight: normal;
+}
+
+div.stackRight {
+	float: right;
 	font: 12px "Lucida Grande", Lucida, Verdana, sans-serif;
 	margin: 4px;
 }
 
-div.stackLeft span {
+div.stackRight span {
 	font-weight: bold;
 }
 
@@ -17,9 +33,19 @@ div.stackLeft span {
 
 div.section {
 	border: 1px solid #d3dadc;
-	margin-bottom: 6px;
-	margin-top: 6px;
-	padding-left: 10px;
-	background-color: #f4fdfe;
-	clear: both;
+	background-color: #f7fdfe;
+	float: left;
+	padding: 10px;
+	clear: right;
+	position: relative;
+	width: 200px;
+	margin: 6px;
+}
+
+div.section h1 {
+	margin: 0;
+	border-bottom: 1px dotted #375f8c;
+}
+
+#output div.section input {
 }

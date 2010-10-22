@@ -1,8 +1,8 @@
 window.addEvent('domready', function () {
 	var testRead;
 	
-	$$('div.stackLeft.library span').set('text', BCS.$libraryVersion);
-	$$('div.stackLeft.target span').set('text', BCS.$location);
+	$$('div.stackRight.library span').set('text', BCS.$libraryVersion);
+	$$('div.stackRight.target span').set('text', BCS.$location);
 	
 	testRead = function (hard) {
 		var output = document.id('output').empty();
