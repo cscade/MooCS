@@ -1,14 +1,6 @@
 window.addEvent('domready', function () {
 	var testRead;
 	
-	document.id('refresh').addEvent('click', function () {
-		testRead();
-	});
-	
-	document.id('hardRefresh').addEvent('click', function () {
-		testRead(true);
-	});
-	
 	$$('div.stackLeft.library span').set('text', BCS.$libraryVersion);
 	$$('div.stackLeft.target span').set('text', BCS.$location);
 	
@@ -21,13 +13,19 @@ window.addEvent('domready', function () {
 			sectionEl.grab(new Element('h1', {
 				text: section
 			}));
-			keys.each(function (key) {
-				BCS.Comm[(hard) ? 'hardRead' : 'read'](section, key, function (response) {
-					sectionEl.grab(new Element('p', {
-						html: key + ': <strong>' + response + '</strong>'
-					}));
+			sectionEl.grab(new Element('input[type=button]', { value: 'Request' }).addEvent('click', function () {
+				sectionEl.getElements('p').destroy();
+				keys.each(function (key) {
+					BCS.Comm.read(section, key, function (response) {
+						sectionEl.grab(new Element('p', {
+							html: key + ': <strong>' + response + '</strong>'
+						}));
+					});
 				});
-			});
+			}));
 		});
 	};
+	
+	// Initial load
+	testRead();
 });

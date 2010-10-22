@@ -21,4 +21,5 @@ div.section {
 	margin-top: 6px;
 	padding-left: 10px;
 	background-color: #f4fdfe;
+	clear: both;
 }
