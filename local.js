@@ -4,6 +4,10 @@ window.addEvent('domready', function () {
 	$$('div.stackRight.library span').set('text', BCS.$libraryVersion);
 	$$('div.stackRight.target span').set('text', BCS.$location);
 	
+	document.id('showAll').addEvent('click', function () {
+		$$('div.section input').fireEvent('click');
+	});
+	
 	testRead = function (hard) {
 		var output = document.id('output').empty();
 		Object.each(BCS.Comm.list('read'), function (keys, section) {
