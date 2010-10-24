@@ -19,7 +19,7 @@ The interface layer is composed of three key parts:
 The GET/POST method the BCS API provides for communication is very well suited to AJAX, and the factory supplied web interface for the unit makes use of AJAX extensively. I wanted to use the same method for this interface layer, but XMLHttpRequest objects are not allowed to communicate outside of the domain of the serving page by the browser. This necessitated the PHP-cURL translation layer to bring the whole thing together: The interface layer communicates with the PHP script, and the PHP script in turn hands off the requests to the BCS unit, and conveys the responses back to the interface layer.
 
 Current Features
-----------------
+---------------
 The project is in it's infancy, currently at version `0.1-development`. Although I have only just begun, the following features are supported:
 
 * *Queued Requests* - Each request to read data from the BCS device passes through a queue. If a large number of simultaneous requests are made, the BCS unit will not need to deal with them all at once. Each request is dispatched as the previous one returns.
