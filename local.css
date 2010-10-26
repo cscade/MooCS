@@ -49,3 +49,11 @@ div.section h1 {
 
 #output div.section input {
 }
+
+#footer {
+	float: left;
+	clear: both;
+	position: relative;
+	display: block;
+	margin-top: 12px;
+}

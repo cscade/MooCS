@@ -1,4 +1,16 @@
 <?php
+/*	backend.php
+	2010-10-19
+	Carson S. Christian
+	cchristian@moocsinterface.net
+	
+	Connection layer for BCS communication to/from an AJAX source.
+*/
+/*
+	This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
+	To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/
+	or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+*/
 /*
 	$_GET should contain the following:
 		location:	The url of the BCS device

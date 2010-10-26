@@ -26,5 +26,10 @@ The project is in it's infancy, currently at version `0.1-development`. Although
 * *Cached Structures* - The BCS API communicates a significant amount of data via structure files. MooCS is aware of which structures contain data that will not change regularly and caches those structures. Requests for data from the unit that MooCS already has a cached copy of will be returned immediately, without communicating with the device a second time. Since the structure files contain a significant amount of data, the *cached structures* feature and the *queued requests* feature work together to make communicating with the device as fast and light as possible.
 * *Data Read & Write* - The interface breaks up all of the structures the BCS unit provides into logical categories ready for reading and writing. Rather than speaking in terms of data structures the way the BCS does natively, you can instead use methods like: `BCS.Comm.read('network', 'currentIP');`
 
+License
+-------
+This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit [here](http://creativecommons.org/licenses/by-sa/3.0/) or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+
+
 [ecc]: http://www.embeddedcontrolconcepts.com
 [moo]: http://www.mootools.net
