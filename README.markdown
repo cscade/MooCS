@@ -30,6 +30,11 @@ License
 -------
 This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit [here](http://creativecommons.org/licenses/by-sa/3.0/) or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
 
+Contact
+-------
+Contact [Carson S. Christian][ccmail] with questions or comments.
+
 
 [ecc]: http://www.embeddedcontrolconcepts.com
 [moo]: http://www.mootools.net
+[ccmail]: mailto:cchristian@moocsinterface.net
