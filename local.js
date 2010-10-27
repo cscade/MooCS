@@ -11,19 +11,18 @@
 	or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
 */
 window.addEvent('domready', function () {
-	var testRead,
-		doChart, chart,
+	var testRead, autoUpdate, doChart, chart,
 		chartData0 = [],
 		chartData1 = [],
 		chartData2 = [],
 		chartData3 = [],
 		chartCounter = 0,
-		autoUpdate;
+		unit0 = new BCS.Device('192.168.110.6');
 	
 	$$('div.stackRight.library span').set('text', BCS.$libraryVersion);
-	$$('div.stackRight.target span').set('text', BCS.$location);
+	$$('div.stackRight.target span').set('text', 'unit0, ' + unit0.location);
 	
-	BCS.Comm.read('firmware', 'version', function (response) {
+	unit0.read('firmware', 'version', function (response) {
 		$$('div.stackRight.firmware span')[0].set('text', response);
 	});
 	
@@ -31,13 +30,9 @@ window.addEvent('domready', function () {
 		$$('div.section input').fireEvent('click');
 	});
 	
-	document.id('drawChart').addEvent('click', function () {
-		autoUpdate();
-	});
-	
 	testRead = function (hard) {
 		var output = document.id('output').empty();
-		Object.each(BCS.Comm.list('read'), function (keys, section) {
+		Object.each(BCS.list('read'), function (keys, section) {
 			var sectionEl = new Element('div.section');
 			
 			output.grab(sectionEl);
@@ -47,7 +42,7 @@ window.addEvent('domready', function () {
 			sectionEl.grab(new Element('input[type=button]', { value: 'Request' }).addEvent('click', function () {
 				sectionEl.getElements('p').destroy();
 				keys.each(function (key) {
-					BCS.Comm.read(section, key, function (response) {
+					unit0.read(section, key, function (response) {
 						sectionEl.grab(new Element('p', {
 							html: key + ': <strong>' + response + '</strong>'
 						}));
@@ -67,25 +62,25 @@ window.addEvent('domready', function () {
 	chart.setAxisNameY('F');
 	doChart = function () {
 		chartCounter += 1;
-		BCS.Comm.read('temp', 'probe0', function (r) {
+		unit0.read('temp', 'probe0', function (r) {
 			chartData0.push([chartCounter, Math.round(r)]);
 			if (chartData0.length > 2000) {
 				chartData0.splice(0, chartData0.length - 2000);
 			}
 		});
-		BCS.Comm.read('temp', 'probe1', function (r) {
+		unit0.read('temp', 'probe1', function (r) {
 			chartData1.push([chartCounter, Math.round(r)]);
 			if (chartData1.length > 2000) {
 				chartData1.splice(0, chartData1.length - 2000);
 			}
 		});
-		BCS.Comm.read('temp', 'probe2', function (r) {
+		unit0.read('temp', 'probe2', function (r) {
 			chartData2.push([chartCounter, Math.round(r)]);
 			if (chartData2.length > 2000) {
 				chartData2.splice(0, chartData2.length - 2000);
 			}
 		});
-		BCS.Comm.read('temp', 'probe3', function (r) {
+		unit0.read('temp', 'probe3', function (r) {
 			chartData3.push([chartCounter, Math.round(r)]);
 			if (chartData3.length > 2000) {
 				chartData3.splice(0, chartData3.length - 2000);
