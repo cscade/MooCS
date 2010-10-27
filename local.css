@@ -1,25 +1,154 @@
 /* @override http://www.moocs.com/local.css */
 
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
 body {
-	font: 12px "Lucida Grande", Lucida, Verdana, sans-serif;
+	font: 12px Lucida, Verdana, sans-serif;
+	background-color: #fbfbfc;
+}
+
+div#body {
+	border: 1px solid #e8e8e8;
+	padding-left: 24px;
+	padding-right: 24px;
+	margin: 10px 20px 20px;
+	background-color: white;
+	-moz-box-shadow: 1px 4px 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 1px 4px 3px rgba(0,0,0,0.3);
+	overflow: visible;
+	position: relative;
+	float: left;
+	padding-top: 16px;
 }
 
 h1 {
-	font-size: 22px;
-	color: #143266;
+	color: #005200;
+	font: 22px "Lucida Grande", Lucida, Verdana, sans-serif;
+	margin-right: 20px;
 }
 
 h1 em {
-	font-family: Georgia, "Times New Roman", Times, serif;
-	color: #2a64ca;
-	font-style: normal;
-	font-weight: normal;
+	color: #6a6;
+	font: italic normal 22px "Gill Sans", Arial;
+}
+
+h2 {
+	color: #503f0e;
+	border-bottom: 1px dotted #8f7320;
+	font: 17px "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+em {
+	font: italic 14px Georgia, "Times New Roman", Times, serif;
+}
+
+a {
+	text-decoration: none;
+	color: #80613a;
+	display: inline-block;
+	background-color: #f5f3e7;
+	padding-right: 2px;
+	padding-left: 2px;
+	border: 1px solid #e9e7dc;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+code {
+	font: 13px "Gill Sans", Arial;
+	color: #4971b6;
+	display: inline-block;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-right-width: 1px;
+	padding-right: 2px;
+	padding-left: 2px;
+	border-color: #dbdbdb;
+}
+
+div.navigation_indent {
+	position: fixed;
+	width: 160px;
+	left: 26px;
+	top: 60px;
+	display: block;
+	padding-right: 8px;
+	padding-top: 8px;
+	padding-bottom: 10px;
+	z-index: 1;
+}
+
+div.navigation_indent div.tr {
+	position: absolute;
+	top: 0;
+	width: 15px;
+	height: 4px;
+	right: 0;
+	background: url(images/indent_01.png) no-repeat;
+}
+
+div.navigation_indent div.r {
+	position: absolute;
+	top: 4px;
+	width: 15px;
+	right: 0;
+	background: url(images/indent_02.png) repeat-y;
+	height: 100%;
+}
+
+div.navigation_indent div.br {
+	position: absolute;
+	width: 15px;
+	height: 3px;
+	right: 0;
+	background: url(images/indent_03.png) no-repeat;
+	bottom: -4px;
+}
+
+div.navigation {
+	background-color: white;
+	-moz-box-shadow: 1px 4px 3px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 1px 2px 2px rgba(0,0,0,0.2);
+	border: 1px solid #e8e8e8;
+	color: #255217;
+	position: relative;
+	font: 11px "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+div.navigation ul {
+	margin: 0;
+	padding: 0;
+}
+
+div.navigation ul li {
+	list-style-type: none;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	padding: 3px 8px 3px 12px;
+}
+
+div.navigation ul li:hover {
+	background-color: #eefaef;
+}
+
+div.navigation ul li.active {
+	background-color: #eefaef;
+	font-weight: bold;
 }
 
 div.stackRight {
 	float: right;
 	font: 12px "Lucida Grande", Lucida, Verdana, sans-serif;
-	margin: 4px;
+	margin: 4px 0 4px 4px;
+	clear: right;
+	background-color: white;
+	padding-left: 6px;
 }
 
 div.stackRight span {
@@ -33,7 +162,7 @@ div.stackRight span {
 
 div.section {
 	border: 1px solid #d3dadc;
-	background-color: #f7fdfe;
+	background-color: #f5fdf6;
 	float: left;
 	padding: 10px;
 	clear: right;
@@ -44,16 +173,19 @@ div.section {
 
 div.section h1 {
 	margin: 0;
-	border-bottom: 1px dotted #375f8c;
+	border-bottom-style: dotted;
+	border-bottom-width: 1px;
 }
 
 #output div.section input {
 }
 
 #footer {
-	float: left;
 	clear: both;
 	position: relative;
 	display: block;
-	margin-top: 12px;
+	margin-top: 26px;
+	margin-bottom: 20px;
+	float: left;
+	width: 100%;
 }
