@@ -17,9 +17,9 @@ window.addEvent('domready', function () {
 		chartData2 = [],
 		chartData3 = [],
 		chartCounter = 0,
-		unit0 = new BCS.Device('192.168.110.6');
+		unit0 = new MooCS.Device('192.168.110.6');
 	
-	$$('div.stackRight.library span').set('text', BCS.$libraryVersion);
+	$$('div.stackRight.library span').set('text', MooCS.$libraryVersion);
 	$$('div.stackRight.target span').set('text', 'unit0, ' + unit0.location);
 	
 	unit0.read('firmware', 'version', function (response) {
@@ -32,7 +32,7 @@ window.addEvent('domready', function () {
 	
 	testRead = function (hard) {
 		var output = document.id('output').empty();
-		Object.each(BCS.list('read'), function (keys, section) {
+		Object.each(MooCS.list('read'), function (keys, section) {
 			var sectionEl = new Element('div.section');
 			
 			output.grab(sectionEl);
