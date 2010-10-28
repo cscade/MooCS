@@ -10,6 +10,7 @@
 	To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/
 	or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
 */
+/*global $$, MooCS, Element, JSChart */
 window.addEvent('domready', function () {
 	var testRead, autoUpdate, doChart, chart,
 		chartData0 = [],
