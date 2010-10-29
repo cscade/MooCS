@@ -12,27 +12,31 @@
 */
 /*global $$, MooCS, Element, JSChart, typeOf */
 window.addEvent('domready', function () {
+	var addDevice;
+	
 	// Page header details
 	$$('div.stackRight.library span').set('text', MooCS.$libraryVersion);
 	
-	// Controllers
-	['192.168.110.6', 'ecc.webhop.org:8081'].each(function (location, index) {
+	addDevice = function (name, address) {
+		if (typeOf(name) !== 'string' || typeOf(address) !== 'string' || name.length < 1 || address.length < 7) {
+			return;
+		}
 		// Initialize a new controller
-		var controller = new MooCS.Device('unit' + index, location, function () {
-			var autoUpdate, doChart, chart,
+		var controller = new MooCS.Device(name, address, function () {
+			var instanceID = String.uniqueID(),
 				chartData0 = [],
 				chartData1 = [],
 				chartData2 = [],
 				chartData3 = [],
 				chartCounter = 0,
-				output, collapse;
+				autoUpdate, doChart, chart, output, collapse;
 			
 			// Build example boxes for all supported dictionary entries
-			document.id('raw').adopt(new Element('h2#rawHeader' + index + '.sectionToggle', {
+			document.id('raw').adopt(new Element('h2#rawHeader' + instanceID + '.sectionToggle', {
 				text: this.name + ' Raw Values'
-			}), new Element('div#output' + index));
-			collapse = new MooCS.Collapsible('rawHeader' + index, 'output' + index).clicker.fireEvent('click');
-			output = document.id('output' + index);
+			}), new Element('div#output' + instanceID));
+			collapse = new MooCS.Collapsible('rawHeader' + instanceID, 'output' + instanceID).clicker.fireEvent('click');
+			output = document.id('output' + instanceID);
 			Object.each(this.list('read'), function (keys, section) {
 				var sectionEl = new Element('div.section');
 
@@ -52,8 +56,8 @@ window.addEvent('domready', function () {
 				}.bind(this)));
 			}, this);
 			// Chart
-			document.id('charts').grab(new Element('div#chart' + index + '.chart'));
-			chart = new JSChart('chart' + index, 'line');
+			document.id('charts').grab(new Element('div#chart' + instanceID + '.chart'));
+			chart = new JSChart('chart' + instanceID, 'line');
 			chart.setTitle(controller.name + ', ' + this.location + ' - ' + ((this.BCS460) ? 'BCS-460' : (this.BCS462) ? 'BCS-462' : 'Unknown'));
 			chart.setAxisNameX('Seconds Elapsed');
 			chart.setAxisNameY('F');
@@ -112,6 +116,16 @@ window.addEvent('domready', function () {
 				chart.draw();
 			}.periodical(10000);
 		});
+	};
+	
+	// Default Controllers
+	['192.168.110.6', 'ecc.webhop.org:8081'].each(function (address, index) {
+		addDevice('unit' + index, address);
+	});
+	
+	// Add Device Input
+	document.id('buttonAddDevice').addEvent('click', function () {
+		addDevice(document.id('input_Name').get('value'), document.id('input_Address').get('value'));
 	});
 	
 });
