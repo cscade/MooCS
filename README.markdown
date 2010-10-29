@@ -1,40 +1,40 @@
-<h1 id="moocs_8220mooks8221_a_javascript_application_interface_layer_for_the_bcs_series_of_automation_controllers"><strong>MooCS</strong> &#8220;Mooks&#8221;: A JavaScript application interface layer for the BCS series of automation controllers.</h1>
+**MooCS** "Mooks": A JavaScript application interface layer for the BCS series of automation controllers.
+===============================================================================================
+The BCS series of automation controllers are produced by [Embedded Control Concepts][ecc]. They provide a robust platform for network addressable process automation for the hobbyist, or more commonly, the home brewer. The controllers provide an HTTP GET/POST based API for 3rd party software development and extension.
 
-<p>The BCS series of automation controllers are produced by <a href="http://www.embeddedcontrolconcepts.com">Embedded Control Concepts</a>. They provide a robust platform for network addressable process automation for the hobbyist, or more commonly, the home brewer. The controllers provide an HTTP GET/POST based API for 3rd party software development and extension.</p>
+This project aims to extend that API into a JavaScript framework for interfacing with the controller. Since the included software is designed specifically with the home brewer in mind, this project aims to fill a different role: *to provide an easy to use interface layer enabling rapid development and deployment of custom applications on the platform*.
 
-<p>This project aims to extend that API into a JavaScript framework for interfacing with the controller. Since the included software is designed specifically with the home brewer in mind, this project aims to fill a different role: <em>to provide an easy to use interface layer enabling rapid development and deployment of custom applications on the platform</em>.</p>
+How I Got Here
+--------------
+As an avid home brewer, I initially purchased a BCS controller in 2009. I found the platform to be extremely stable, and it inspired me to look beyond it's intended purpose. I'm a professional javascript application developer by trade, so I got excited about the opportunity to extend the BCS API into a technology I'm more familiar with. Long term, I hope this project will enable myself and others to deploy the BCS controllers for a variety of uses outside the brewery, including home automation, solar energy system control, and so forth.
 
-<h2 id="how_i_got_here">How I Got Here</h2>
+The Moving Parts
+-----------------
+The interface layer is composed of three key parts:
 
-<p>As an avid home brewer, I initially purchased a BCS controller in 2009. I found the platform to be extremely stable, and it inspired me to look beyond it&#8217;s intended purpose. I&#8217;m a professional javascript application developer by trade, so I got excited about the opportunity to extend the BCS API into a technology I&#8217;m more familiar with. Long term, I hope this project will enable myself and others to deploy the BCS controllers for a variety of uses outside the brewery, including home automation, solar energy system control, and so forth.</p>
+1. A JavaScript global object `BCS` providing the actual interface to the BCS unit, using AJAX communications
+2. The excellent open source [MooTools][moo] JavaScript library
+3. A PHP back end script utilizing cURL to communicate with the BCS unit
 
-<h2 id="the_moving_parts">The Moving Parts</h2>
+The GET/POST method the BCS API provides for communication is very well suited to AJAX, and the factory supplied web interface for the unit makes use of AJAX extensively. I wanted to use the same method for this interface layer, but XMLHttpRequest objects are not allowed to communicate outside of the domain of the serving page by the browser. This necessitated the PHP-cURL translation layer to bring the whole thing together: The interface layer communicates with the PHP script, and the PHP script in turn hands off the requests to the BCS unit, and conveys the responses back to the interface layer.
 
-<p>The interface layer is composed of three key parts:</p>
+Current Features
+---------------
+The project is in it's infancy, currently at version `0.1-development`. Although I have only just begun, the following features are supported:
 
-<ol>
-<li>A JavaScript global object <code>MooCS</code> providing a constructor to create software instances for each BCS device</li>
-<li>The excellent open source <a href="http://www.mootools.net">MooTools</a> JavaScript library</li>
-<li>A PHP back end script utilizing cURL to communicate with the BCS unit</li>
-</ol>
+* *Queued Requests* - Each request to read data from the BCS device passes through a queue. If a large number of simultaneous requests are made, the BCS unit will not need to deal with them all at once. Each request is dispatched as the previous one returns.
+* *Cached Structures* - The BCS API communicates a significant amount of data via structure files. MooCS is aware of which structures contain data that will not change regularly and caches those structures. Requests for data from the unit that MooCS already has a cached copy of will be returned immediately, without communicating with the device a second time. Since the structure files contain a significant amount of data, the *cached structures* feature and the *queued requests* feature work together to make communicating with the device as fast and light as possible.
+* *Data Read & Write* - The interface breaks up all of the structures the BCS unit provides into logical categories ready for reading and writing. Rather than speaking in terms of data structures the way the BCS does natively, you can instead use methods like: `BCS.Comm.read('network', 'currentIP');`
 
-<p>The GET/POST method the BCS API provides for communication is very well suited to AJAX, and the factory supplied web interface for the unit makes use of AJAX extensively. I wanted to use the same method for this interface layer, but XMLHttpRequest objects are not allowed to communicate outside of the domain of the serving page by the browser. This necessitated the PHP-cURL translation layer to bring the whole thing together: The interface layer communicates with the PHP script, and the PHP script in turn hands off the requests to the BCS unit, and conveys the responses back to the interface layer.</p>
+License
+-------
+This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit [here](http://creativecommons.org/licenses/by-sa/3.0/) or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
 
-<h2 id="current_features">Current Features</h2>
+Contact
+-------
+Contact [Carson S. Christian][ccmail] with questions or comments.
 
-<p>The project is in it&#8217;s infancy, currently at version <code>0.2-development</code>. Although I have only just begun, the following features are supported:</p>
 
-<ul>
-<li><em>Queued Requests</em> - Each request to read data from the BCS device passes through a queue. If a large number of simultaneous requests are made, the BCS unit will not need to deal with them all at once. Each request is dispatched as the previous one returns.</li>
-<li><em>Cached Structures</em> - The BCS API communicates a significant amount of data via structure files. MooCS is aware of which structures contain data that will not change regularly and caches those structures. Requests for data from the unit that MooCS already has a cached copy of will be returned immediately, without communicating with the device a second time. Since the structure files contain a significant amount of data, the <em>cached structures</em> feature and the <em>queued requests</em> feature work together to make communicating with the device as fast and light as possible.</li>
-<li><em>Data Read &amp; Write</em> - The interface breaks up all of the structures the BCS unit provides into logical categories ready for reading and writing. Rather than speaking in terms of data structures the way the BCS does natively, you can instead use methods like: <code>bcsDevice.read('network', 'currentIP');</code></li>
-<li><em>Multiple BCS Support</em> - The interface layer can support any number of BCS target devices, each having their own instance, queue, cache, etc.</li>
-</ul>
-
-<h2 id="license">License</h2>
-
-<p>This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit <a href="http://creativecommons.org/licenses/by-sa/3.0/">here</a> or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.</p>
-
-<h2 id="contact">Contact</h2>
-
-<p>Contact <a href="mailto:cchristian@moocsinterface.net">Carson S. Christian</a> with questions or comments.</p>
+[ecc]: http://www.embeddedcontrolconcepts.com
+[moo]: http://www.mootools.net
+[ccmail]: mailto:cchristian@moocsinterface.net
