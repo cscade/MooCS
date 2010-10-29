@@ -12,28 +12,21 @@
 */
 /*global $$, MooCS, Element, JSChart */
 window.addEvent('domready', function () {
-	var testRead, autoUpdate, doChart, chart,
+	var autoUpdate, doChart, chart,
 		chartData0 = [],
 		chartData1 = [],
 		chartData2 = [],
 		chartData3 = [],
 		chartCounter = 0,
-		unit0 = new MooCS.Device('192.168.110.6');
-	
-	$$('div.stackRight.library span').set('text', MooCS.$libraryVersion);
-	$$('div.stackRight.target span').set('text', 'unit0, ' + unit0.location);
-	
-	unit0.read('firmware', 'version', function (response) {
-		$$('div.stackRight.firmware span')[0].set('text', response);
-	});
-	
-	document.id('showAll').addEvent('click', function () {
-		$$('div.section input').fireEvent('click');
-	});
-	
-	testRead = function (hard) {
-		var output = document.id('output').empty();
-		Object.each(MooCS.list('read'), function (keys, section) {
+		unit0;
+		
+	// Initialize a new controller
+	unit0 = new MooCS.Device('192.168.110.6', function () {
+		var output = document.id('output').empty(),
+			controller = this;
+		
+		// Build example boxes for all supported dictionary entries
+		Object.each(controller.list('read'), function (keys, section) {
 			var sectionEl = new Element('div.section');
 			
 			output.grab(sectionEl);
@@ -43,7 +36,7 @@ window.addEvent('domready', function () {
 			sectionEl.grab(new Element('input[type=button]', { value: 'Request' }).addEvent('click', function () {
 				sectionEl.getElements('p').destroy();
 				keys.each(function (key) {
-					unit0.read(section, key, function (response) {
+					controller.read(section, key, function (response) {
 						sectionEl.grab(new Element('p', {
 							html: key + ': <strong>' + response + '</strong>'
 						}));
@@ -51,10 +44,20 @@ window.addEvent('domready', function () {
 				});
 			}));
 		});
-	};
+		// Page header details
+		$$('div.stackRight.library span').set('text', MooCS.$libraryVersion);
+		$$('div.stackRight.target span').set('text', 'unit0, ' + controller.location);
+		$$('div.stackRight.detected span').set('text', (controller.BCS460) ? 'BCS-460' : (controller.BCS462) ? 'BCS-462' : 'Unknown');
+
+		controller.read('firmware', 'version', function (response) {
+			$$('div.stackRight.firmware span').set('text', response);
+		});
+	});
 	
-	// Initial load
-	testRead();
+	// Request All Button clicks al individual request buttons
+	document.id('showAll').addEvent('click', function () {
+		$$('div.section input').fireEvent('click');
+	});
 	
 	// Chart
 	chart = new JSChart('chart', 'line');
