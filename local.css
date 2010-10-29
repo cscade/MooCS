@@ -41,6 +41,10 @@ h2 {
 	font: 17px "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 
+h2.sectionToggle {
+	cursor: pointer;
+}
+
 em {
 	font: italic 14px Georgia, "Times New Roman", Times, serif;
 }
