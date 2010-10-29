@@ -39,6 +39,7 @@ h2 {
 	color: #503f0e;
 	border-bottom: 1px dotted #8f7320;
 	font: 17px "Lucida Grande", Lucida, Verdana, sans-serif;
+	clear: both;
 }
 
 h2.sectionToggle {
