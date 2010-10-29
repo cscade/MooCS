@@ -46,16 +46,22 @@ div.section {
 	clear: right;
 	position: relative;
 	width: 200px;
-	margin: 6px;
+	margin: 2px;
 }
 
 div.section h1 {
-	margin: 0;
+	margin: 0 0 2px;
 	border-bottom-style: dotted;
 	border-bottom-width: 1px;
+	font-size: 15px;
 }
 
 #output div.section input {
+}
+
+div.section p {
+	margin-top: 3px;
+	margin-bottom: 3px;
 }
 
 div.chart {
