@@ -12,9 +12,9 @@ body {
 
 div#body {
 	border: 1px solid #e8e8e8;
-	padding-left: 24px;
-	padding-right: 24px;
-	margin: 10px 20px 20px;
+	padding-left: 2%;
+	padding-right: 2%;
+	margin: 10px 2% 20px;
 	background-color: white;
 	-moz-box-shadow: 1px 4px 3px rgba(0,0,0,0.3);
 	-webkit-box-shadow: 1px 4px 3px rgba(0,0,0,0.3);
@@ -22,6 +22,7 @@ div#body {
 	position: relative;
 	float: left;
 	padding-top: 16px;
+	width: 92%;
 }
 
 h1 {
