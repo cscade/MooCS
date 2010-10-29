@@ -56,6 +56,10 @@ window.addEvent('domready', function () {
 					}.bind(this));
 				}.bind(this)));
 			}, this);
+			// Activity Indicator
+			this.addActivityListener(function (active) {
+				document.id('rawHeader' + instanceID)[(active) ? 'addClass' : 'removeClass']('running');
+			});
 			// Chart
 			document.id('charts').grab(new Element('div#chart' + instanceID + '.chart'));
 			chart = new JSChart('chart' + instanceID, 'line');
@@ -120,7 +124,6 @@ window.addEvent('domready', function () {
 	};
 	
 	// Default Controllers
-	addDevice('MyBCS', '192.168.110.6');
 	addDevice('DemoBCS', 'ecc.webhop.org:8081');
 	
 	// Add Device Input

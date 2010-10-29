@@ -45,6 +45,12 @@ h2 {
 
 h2.sectionToggle {
 	cursor: pointer;
+	padding-left: 34px;
+	background: transparent url(images/loading-indicator-still.gif) no-repeat -9px;
+}
+
+h2.sectionToggle.running {
+	background: transparent url(images/loading-indicator.gif) no-repeat -9px;
 }
 
 em {
