@@ -10,7 +10,7 @@
 	To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/
 	or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
 */
-/*global $$, MooCS, Element, JSChart */
+/*global $$, MooCS, Element, JSChart, typeOf */
 window.addEvent('domready', function () {
 	var autoUpdate, doChart, chart,
 		chartData0 = [],
@@ -18,10 +18,15 @@ window.addEvent('domready', function () {
 		chartData2 = [],
 		chartData3 = [],
 		chartCounter = 0,
-		unit0;
+		sCharts, sRaw,
+		unit0, unit1;
+		
+	// Page sections
+	sCharts = new MooCS.Collapsible('section_tempPlots', document.id('section_tempPlots').getNext('div'));
+	sRaw = new MooCS.Collapsible('section_Raw', document.id('section_Raw').getNext('div')).clicker.fireEvent('click');
 		
 	// Initialize a new controller
-	unit0 = new MooCS.Device('192.168.110.6', function () {
+	unit0 = new MooCS.Device('ecc.webhop.org:8081', function () {
 		var output = document.id('output').empty(),
 			controller = this;
 		
@@ -46,52 +51,61 @@ window.addEvent('domready', function () {
 		});
 		// Page header details
 		$$('div.stackRight.library span').set('text', MooCS.$libraryVersion);
-		$$('div.stackRight.target span').set('text', 'unit0, ' + controller.location);
-		$$('div.stackRight.detected span').set('text', (controller.BCS460) ? 'BCS-460' : (controller.BCS462) ? 'BCS-462' : 'Unknown');
 
 		controller.read('firmware', 'version', function (response) {
 			$$('div.stackRight.firmware span').set('text', response);
 		});
 	});
 	
-	// Request All Button clicks al individual request buttons
-	document.id('showAll').addEvent('click', function () {
-		$$('div.section input').fireEvent('click');
-	});
-	
 	// Chart
 	chart = new JSChart('chart', 'line');
-	chart.setTitle('');
 	chart.setAxisNameX('Seconds Elapsed');
 	chart.setAxisNameY('F');
 	doChart = function () {
 		chartCounter += 1;
 		unit0.read('temp', 'probe0', function (r) {
-			chartData0.push([chartCounter, Math.round(r)]);
-			if (chartData0.length > 2000) {
-				chartData0.splice(0, chartData0.length - 2000);
+			var v = Math.round(r);
+			
+			if (typeOf(v) === 'number') {
+				chartData0.push([chartCounter, v]);
+				if (chartData0.length > 2000) {
+					chartData0.splice(0, chartData0.length - 2000);
+				}
 			}
 		});
 		unit0.read('temp', 'probe1', function (r) {
-			chartData1.push([chartCounter, Math.round(r)]);
-			if (chartData1.length > 2000) {
-				chartData1.splice(0, chartData1.length - 2000);
+			var v = Math.round(r);
+			
+			if (typeOf(v) === 'number') {
+				chartData1.push([chartCounter, v]);
+				if (chartData1.length > 2000) {
+					chartData1.splice(0, chartData1.length - 2000);
+				}
 			}
 		});
 		unit0.read('temp', 'probe2', function (r) {
-			chartData2.push([chartCounter, Math.round(r)]);
-			if (chartData2.length > 2000) {
-				chartData2.splice(0, chartData2.length - 2000);
+			var v = Math.round(r);
+			
+			if (typeOf(v) === 'number') {
+				chartData2.push([chartCounter, v]);
+				if (chartData2.length > 2000) {
+					chartData2.splice(0, chartData2.length - 2000);
+				}
 			}
 		});
 		unit0.read('temp', 'probe3', function (r) {
-			chartData3.push([chartCounter, Math.round(r)]);
-			if (chartData3.length > 2000) {
-				chartData3.splice(0, chartData3.length - 2000);
+			var v = Math.round(r);
+			
+			if (typeOf(v) === 'number') {
+				chartData3.push([chartCounter, v]);
+				if (chartData3.length > 2000) {
+					chartData3.splice(0, chartData3.length - 2000);
+				}
 			}
 		});
 	}.periodical(1000);
 	autoUpdate = function () {
+		chart.setTitle('unit0, ' + unit0.location + ' - ' + ((unit0.BCS460) ? 'BCS-460' : (unit0.BCS462) ? 'BCS-462' : 'Unknown'));
 		chart.setDataArray(chartData0, '0');
 		chart.setDataArray(chartData1, '1');
 		chart.setDataArray(chartData2, '2');
