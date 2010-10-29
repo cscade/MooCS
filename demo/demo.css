@@ -1,0 +1,63 @@
+/* @override 
+	http://www.moocs.com/demo/demo.css
+*/
+
+div#body {
+	max-width: inherit;
+}
+
+h2 {
+	clear: both;
+}
+
+h2.sectionToggle {
+	cursor: pointer;
+	padding-left: 34px;
+	background: transparent url(images/loading-indicator-still.gif) no-repeat -9px;
+}
+
+h2.sectionToggle.running {
+	background: transparent url(images/loading-indicator.gif) no-repeat -9px;
+}
+
+div.stackRight {
+	float: right;
+	font: 12px "Lucida Grande", Lucida, Verdana, sans-serif;
+	margin: 4px 0 4px 4px;
+	clear: right;
+	background-color: white;
+	padding-left: 6px;
+}
+
+div.stackRight span {
+	font-weight: bold;
+}
+
+#refresh {
+	display: block;
+	clear: both;
+}
+
+div.section {
+	border: 1px solid #d3dadc;
+	background-color: #f5fdf6;
+	float: left;
+	padding: 10px;
+	clear: right;
+	position: relative;
+	width: 200px;
+	margin: 6px;
+}
+
+div.section h1 {
+	margin: 0;
+	border-bottom-style: dotted;
+	border-bottom-width: 1px;
+}
+
+#output div.section input {
+}
+
+div.chart {
+	display: inline-block;
+}

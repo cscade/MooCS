@@ -1,4 +1,4 @@
-/* @override http://www.moocs.com/local.css */
+/* @override http://www.moocs.com/site.css */
 
 html, body {
 	margin: 0;
@@ -11,18 +11,16 @@ body {
 }
 
 div#body {
+	max-width: 800px;
 	border: 1px solid #e8e8e8;
-	padding-left: 2%;
-	padding-right: 2%;
-	margin: 10px 2% 20px;
+	padding-left: 24px;
+	padding-right: 24px;
+	margin: 10px 20px 20px 180px;
 	background-color: white;
 	-moz-box-shadow: 1px 4px 3px rgba(0,0,0,0.3);
 	-webkit-box-shadow: 1px 4px 3px rgba(0,0,0,0.3);
 	overflow: visible;
 	position: relative;
-	float: left;
-	padding-top: 16px;
-	width: 92%;
 }
 
 h1 {
@@ -40,17 +38,6 @@ h2 {
 	color: #503f0e;
 	border-bottom: 1px dotted #8f7320;
 	font: 17px "Lucida Grande", Lucida, Verdana, sans-serif;
-	clear: both;
-}
-
-h2.sectionToggle {
-	cursor: pointer;
-	padding-left: 34px;
-	background: transparent url(images/loading-indicator-still.gif) no-repeat -9px;
-}
-
-h2.sectionToggle.running {
-	background: transparent url(images/loading-indicator.gif) no-repeat -9px;
 }
 
 em {
@@ -152,56 +139,4 @@ div.navigation ul li:hover {
 div.navigation ul li.active {
 	background-color: #eefaef;
 	font-weight: bold;
-}
-
-div.stackRight {
-	float: right;
-	font: 12px "Lucida Grande", Lucida, Verdana, sans-serif;
-	margin: 4px 0 4px 4px;
-	clear: right;
-	background-color: white;
-	padding-left: 6px;
-}
-
-div.stackRight span {
-	font-weight: bold;
-}
-
-#refresh {
-	display: block;
-	clear: both;
-}
-
-div.section {
-	border: 1px solid #d3dadc;
-	background-color: #f5fdf6;
-	float: left;
-	padding: 10px;
-	clear: right;
-	position: relative;
-	width: 200px;
-	margin: 6px;
-}
-
-div.section h1 {
-	margin: 0;
-	border-bottom-style: dotted;
-	border-bottom-width: 1px;
-}
-
-#output div.section input {
-}
-
-#footer {
-	clear: both;
-	position: relative;
-	display: block;
-	margin-top: 26px;
-	margin-bottom: 20px;
-	float: left;
-	width: 100%;
-}
-
-div.chart {
-	display: inline-block;
 }
