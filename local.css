@@ -194,3 +194,7 @@ div.section h1 {
 	float: left;
 	width: 100%;
 }
+
+div.chart {
+	display: inline-block;
+}
