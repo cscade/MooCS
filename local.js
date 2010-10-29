@@ -19,6 +19,7 @@ window.addEvent('domready', function () {
 	
 	addDevice = function (name, address) {
 		if (typeOf(name) !== 'string' || typeOf(address) !== 'string' || name.length < 1 || address.length < 7) {
+			alert('Supply a text name and TCP/IP address for the new contoller first.\n\nAddress should be in the form:\n192.168.0.1:80\nPort number is optional.');
 			return;
 		}
 		// Initialize a new controller
@@ -119,9 +120,8 @@ window.addEvent('domready', function () {
 	};
 	
 	// Default Controllers
-	['192.168.110.6', 'ecc.webhop.org:8081'].each(function (address, index) {
-		addDevice('unit' + index, address);
-	});
+	addDevice('MyBCS', '192.168.110.6');
+	addDevice('DemoBCS', 'ecc.webhop.org:8081');
 	
 	// Add Device Input
 	document.id('buttonAddDevice').addEvent('click', function () {
