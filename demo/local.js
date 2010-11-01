@@ -71,7 +71,7 @@ window.addEvent('domready', function () {
 					return;
 				}
 				chartCounter += 1;
-				this.read('temp', 'probe0', function (r) {
+				this.read('temp', 'value0', function (r) {
 					var v = Math.round(r);
 
 					if (typeOf(v) === 'number') {
@@ -81,7 +81,7 @@ window.addEvent('domready', function () {
 						}
 					}
 				});
-				this.read('temp', 'probe1', function (r) {
+				this.read('temp', 'value1', function (r) {
 					var v = Math.round(r);
 
 					if (typeOf(v) === 'number') {
@@ -91,7 +91,7 @@ window.addEvent('domready', function () {
 						}
 					}
 				});
-				this.read('temp', 'probe2', function (r) {
+				this.read('temp', 'value2', function (r) {
 					var v = Math.round(r);
 
 					if (typeOf(v) === 'number') {
@@ -101,7 +101,7 @@ window.addEvent('domready', function () {
 						}
 					}
 				});
-				this.read('temp', 'probe3', function (r) {
+				this.read('temp', 'value3', function (r) {
 					var v = Math.round(r);
 
 					if (typeOf(v) === 'number') {
@@ -130,7 +130,8 @@ window.addEvent('domready', function () {
 	};
 	
 	// Default Controllers
-	addDevice('DemoBCS', 'ecc.webhop.org:8081');
+	// addDevice('DemoBCS', 'ecc.webhop.org:8081');
+	addDevice('myBCS', '192.168.110.6');
 	
 	// Add Device Input
 	document.id('buttonAddDevice').addEvent('click', function () {
