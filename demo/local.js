@@ -30,7 +30,7 @@ window.addEvent('domready', function () {
 				chartData2 = [],
 				chartData3 = [],
 				chartCounter = 0,
-				autoUpdate, doChart, chart, output, collapse;
+				autoUpdateChart, readChartData, chart, output, collapse;
 			
 			// Build example boxes for all supported dictionary entries
 			document.id('raw').adopt(new Element('h2#rawHeader' + instanceID + '.sectionToggle', {
@@ -66,7 +66,10 @@ window.addEvent('domready', function () {
 			chart.setTitle(controller.name + ', ' + this.location + ' - ' + ((this.BCS460) ? 'BCS-460' : (this.BCS462) ? 'BCS-462' : 'Unknown'));
 			chart.setAxisNameX('Seconds Elapsed');
 			chart.setAxisNameY('F');
-			doChart = function () {
+			readChartData = function () {
+				if (document.id('autoRefresh').get('checked') === false) {
+					return;
+				}
 				chartCounter += 1;
 				this.read('temp', 'probe0', function (r) {
 					var v = Math.round(r);
@@ -109,7 +112,10 @@ window.addEvent('domready', function () {
 					}
 				});
 			}.bind(this).periodical(1000);
-			autoUpdate = function () {
+			autoUpdateChart = function () {
+				if (document.id('autoRefresh').get('checked') === false) {
+					return;
+				}
 				chart.setDataArray(chartData0, '0');
 				chart.setDataArray(chartData1, '1');
 				chart.setDataArray(chartData2, '2');
