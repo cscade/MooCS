@@ -130,8 +130,8 @@ window.addEvent('domready', function () {
 	};
 	
 	// Default Controllers
-	// addDevice('DemoBCS', 'ecc.webhop.org:8081');
-	addDevice('myBCS', '192.168.110.6');
+	addDevice('DemoBCS', 'ecc.webhop.org:8081');
+	// addDevice('myBCS', '192.168.110.6');
 	
 	// Add Device Input
 	document.id('buttonAddDevice').addEvent('click', function () {
