@@ -48,11 +48,11 @@ window.addEvent('domready', function () {
 				sectionEl.grab(new Element('input[type=button]', { value: 'Refresh' }).addEvent('click', function () {
 					sectionEl.getElements('p').destroy();
 					keys.each(function (key) {
+						var p = new Element('p');
+						sectionEl.grab(p);
 						this.read(section, key, function (response) {
-							sectionEl.grab(new Element('p', {
-								html: key + ': <strong>' + response + '</strong>'
-							}));
-						});
+							p.set('html', key + ': <strong>' + response + '</strong>');
+						}, true);
 					}.bind(this));
 				}.bind(this)));
 			}, this);
