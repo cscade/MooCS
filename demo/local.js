@@ -36,7 +36,7 @@ window.addEvent('domready', function () {
 			document.id('raw').adopt(new Element('h2#rawHeader' + instanceID + '.sectionToggle', {
 				text: this.name + ' Raw Values'
 			}), new Element('div#output' + instanceID));
-			collapse = new MooCS.Collapsible('rawHeader' + instanceID, 'output' + instanceID).clicker.fireEvent('click');
+			collapse = new MooCS.Collapsible('rawHeader' + instanceID, 'output' + instanceID);
 			output = document.id('output' + instanceID);
 			Object.each(this.getCapabilities(), function (keys, section) {
 				var sectionEl = new Element('div.section');
@@ -66,54 +66,49 @@ window.addEvent('domready', function () {
 			chart.setTitle(controller.name + ', ' + this.location + ' - ' + ((this.BCS460) ? 'BCS-460' : (this.BCS462) ? 'BCS-462' : 'Unknown'));
 			chart.setAxisNameX('Seconds Elapsed');
 			chart.setAxisNameY('F');
-			readChartData = function () {
-				if (document.id('autoRefresh').get('checked') === false) {
-					return;
+			(function () { chartCounter += 1; }).periodical(1000);
+			this.addUpdateListener('temp', 'value0', function (r) {
+				var v = Math.round(r);
+
+				if (typeOf(v) === 'number') {
+					chartData0.push([chartCounter, v]);
+					if (chartData0.length > 2000) {
+						chartData0.splice(0, chartData0.length - 2000);
+					}
 				}
-				chartCounter += 1;
-				this.read('temp', 'value0', function (r) {
-					var v = Math.round(r);
+			});
+			this.addUpdateListener('temp', 'value1', function (r) {
+				var v = Math.round(r);
 
-					if (typeOf(v) === 'number') {
-						chartData0.push([chartCounter, v]);
-						if (chartData0.length > 2000) {
-							chartData0.splice(0, chartData0.length - 2000);
-						}
+				if (typeOf(v) === 'number') {
+					chartData1.push([chartCounter, v]);
+					if (chartData1.length > 2000) {
+						chartData1.splice(0, chartData1.length - 2000);
 					}
-				});
-				this.read('temp', 'value1', function (r) {
-					var v = Math.round(r);
+				}
+			});
+			this.addUpdateListener('temp', 'value2', function (r) {
+				var v = Math.round(r);
 
-					if (typeOf(v) === 'number') {
-						chartData1.push([chartCounter, v]);
-						if (chartData1.length > 2000) {
-							chartData1.splice(0, chartData1.length - 2000);
-						}
+				if (typeOf(v) === 'number') {
+					chartData2.push([chartCounter, v]);
+					if (chartData2.length > 2000) {
+						chartData2.splice(0, chartData2.length - 2000);
 					}
-				});
-				this.read('temp', 'value2', function (r) {
-					var v = Math.round(r);
+				}
+			});
+			this.addUpdateListener('temp', 'value3', function (r) {
+				var v = Math.round(r);
 
-					if (typeOf(v) === 'number') {
-						chartData2.push([chartCounter, v]);
-						if (chartData2.length > 2000) {
-							chartData2.splice(0, chartData2.length - 2000);
-						}
+				if (typeOf(v) === 'number') {
+					chartData3.push([chartCounter, v]);
+					if (chartData3.length > 2000) {
+						chartData3.splice(0, chartData3.length - 2000);
 					}
-				});
-				this.read('temp', 'value3', function (r) {
-					var v = Math.round(r);
-
-					if (typeOf(v) === 'number') {
-						chartData3.push([chartCounter, v]);
-						if (chartData3.length > 2000) {
-							chartData3.splice(0, chartData3.length - 2000);
-						}
-					}
-				});
-			}.bind(this).periodical(1000);
+				}
+			});
 			autoUpdateChart = function () {
-				if (document.id('autoRefresh').get('checked') === false) {
+				if (chartData0.length < 1 || chartData1.length < 1 || chartData2.length < 1 || chartData3.length < 1) {
 					return;
 				}
 				chart.setDataArray(chartData0, '0');
@@ -125,17 +120,24 @@ window.addEvent('domready', function () {
 				chart.setLineColor('#3c7d96', '2');
 				chart.setLineColor('#4b9531', '3');
 				chart.draw();
-			}.periodical(10000);
+			}.periodical(5000);
 		});
 	};
 	
 	// Default Controllers
-	addDevice('DemoBCS', 'ecc.webhop.org:8081');
-	// addDevice('myBCS', '192.168.110.6');
+	// addDevice('DemoBCS', 'ecc.webhop.org:8081');
+	addDevice('myBCS', '192.168.110.6');
 	
 	// Add Device Input
 	document.id('buttonAddDevice').addEvent('click', function () {
 		addDevice(document.id('input_Name').get('value'), document.id('input_Address').get('value'));
+	});
+	
+	// Polling
+	document.id('autoRefresh').addEvent('change', function () {
+		Object.each(MooCS.$instances, function (c) {
+			c[this.get('checked') ? 'startPolling' : 'stopPolling'](1000);
+		}, this);
 	});
 	
 });
