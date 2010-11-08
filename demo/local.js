@@ -30,7 +30,7 @@ window.addEvent('domready', function () {
 				chartData2 = [],
 				chartData3 = [],
 				chartCounter = 0,
-				autoUpdateChart, readChartData, chart, output, collapse;
+				autoUpdateChart, chart, output, collapse;
 			
 			// Build example boxes for all supported dictionary entries
 			document.id('raw').adopt(new Element('h2#rawHeader' + instanceID + '.sectionToggle', {
@@ -121,18 +121,10 @@ window.addEvent('domready', function () {
 				chart.setLineColor('#4b9531', '3');
 				chart.draw();
 			}.periodical(5000);
+			// Turn on polling
+			document.id('autoRefresh').set('checked', true).fireEvent('change');
 		});
 	};
-	
-	// Default Controllers
-	// addDevice('DemoBCS', 'ecc.webhop.org:8081');
-	addDevice('myBCS', '192.168.110.6');
-	
-	// Add Device Input
-	document.id('buttonAddDevice').addEvent('click', function () {
-		addDevice(document.id('input_Name').get('value'), document.id('input_Address').get('value'));
-	});
-	
 	// Polling
 	document.id('autoRefresh').addEvent('change', function () {
 		Object.each(MooCS.$instances, function (c) {
@@ -140,4 +132,12 @@ window.addEvent('domready', function () {
 		}, this);
 	});
 	
+	// Default Controllers
+	addDevice('DemoBCS', 'ecc.webhop.org:8081');
+	addDevice('myBCS', '192.168.110.6');
+	
+	// Add Device Input
+	document.id('buttonAddDevice').addEvent('click', function () {
+		addDevice(document.id('input_Name').get('value'), document.id('input_Address').get('value'));
+	});
 });
