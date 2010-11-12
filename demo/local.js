@@ -33,10 +33,38 @@ window.addEvent('domready', function () {
 				autoUpdateChart, chart, output, collapse;
 			
 			// Build example boxes for all supported dictionary entries
-			document.id('raw').adopt(new Element('h2#rawHeader' + instanceID + '.sectionToggle', {
-				text: this.name + ' Raw Values'
-			}), new Element('div#output' + instanceID));
-			collapse = new MooCS.Collapsible('rawHeader' + instanceID, 'output' + instanceID);
+			document.id('raw').adopt(
+				new Element('h2#rawHeader' + instanceID + '.sectionToggle', {
+					text: this.name + ' Raw Values'
+				}),
+				new Element('h3#connectionQuality' + instanceID, {
+					text: 'Connection quality: Good'
+				}),
+				new Element('div#output' + instanceID)
+			);
+			(function () {
+				var sum = 0,
+					average = 0,
+					ratings = {
+						'-0.1': 'Excellent',
+						'0.3': 'Good',
+						'1.0': 'Degraded',
+						'1.5': 'Poor',
+						'3.0': 'Terrible'
+					},
+					rating = undefined;
+				
+				controller.communications.responseTimes.each(function (t) {
+					sum += t;
+				});
+				average = (sum / controller.communications.responseTimes.length).round(1);
+				Object.each(ratings, function (r, k) {
+					if (Number.from(k) < average) {
+						rating = r;
+					}
+				});
+				document.id('connectionQuality' + instanceID).set('text', 'Connection quality: ' + rating + ' (' + average + ' seconds lag average, ' + controller.communications.responseTimes.length + ' samples)');
+			}).periodical(100);
 			collapse = new Collapsible('rawHeader' + instanceID, 'output' + instanceID);
 			output = document.id('output' + instanceID);
 			Object.each(this.getCapabilities(), function (keys, section) {
@@ -135,7 +163,7 @@ window.addEvent('domready', function () {
 	
 	// Default Controllers
 	addDevice('DemoBCS', 'ecc.webhop.org:8081');
-	// addDevice('myBCS', '192.168.110.6');
+	addDevice('myBCS', '192.168.110.6');
 	
 	// Add Device Input
 	document.id('buttonAddDevice').addEvent('click', function () {
