@@ -6,7 +6,7 @@
 	Requires Fx.Reveal (mootools more)
 */
 /*global $$, MooCS, Element, Class, Request, typeOf, JSChart, Fx */
-MooCS.Collapsible = new Class({
+Collapsible = new Class({
 	Extends: Fx.Reveal,
 	initialize: function (clicker, section, options) {
 		if (clicker) {

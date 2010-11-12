@@ -37,6 +37,7 @@ window.addEvent('domready', function () {
 				text: this.name + ' Raw Values'
 			}), new Element('div#output' + instanceID));
 			collapse = new MooCS.Collapsible('rawHeader' + instanceID, 'output' + instanceID);
+			collapse = new Collapsible('rawHeader' + instanceID, 'output' + instanceID);
 			output = document.id('output' + instanceID);
 			Object.each(this.getCapabilities(), function (keys, section) {
 				var sectionEl = new Element('div.section');
