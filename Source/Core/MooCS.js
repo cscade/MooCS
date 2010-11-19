@@ -14,6 +14,6 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 ...
 */
 this.MooCS = {
-	$libraryVersion: '0.3-dev',
+	$libraryVersion: '0.3.1-dev',
 	$instances: {}
 };
