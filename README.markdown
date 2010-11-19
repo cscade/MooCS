@@ -8,7 +8,7 @@ The Moving Parts
 -----------------
 The interface layer is composed of three key parts:
 
-1. A JavaScript global object `MooCS` providing the actual interface to the BCS unit, using AJAX communications
+1. A JavaScript global namespace `MooCS` providing the tools to interface to the BCS unit, using AJAX communications
 2. The excellent open source [MooTools][moo] JavaScript library
 3. A PHP back end script utilizing cURL to communicate with the BCS unit
 
@@ -16,7 +16,7 @@ The GET/POST method the BCS API provides for communication is very well suited t
 
 Current Features
 ---------------
-The project is in it's infancy, currently at version `0.2-development`. Although I have only just begun, the following features are supported:
+The project is in it's infancy. Although I have only just begun, the following features are supported:
 
 * *Queued Requests* - Each request to read data from the BCS device passes through a queue. If a large number of simultaneous requests are made, the BCS unit will not need to deal with them all at once. Each request is dispatched as the previous one returns.
 * *Cached Structures* - The BCS uses structure files which contain a significant amount of data. The *cached structures* feature and the *queued requests* feature work together to make communicating with the device as fast and light as possible, minimizing network traffic and latency when reading consecutive values.
