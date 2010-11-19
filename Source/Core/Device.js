@@ -13,7 +13,7 @@ requires:
 	- /MooCS
 	- /Dictionary
 
-provides: Device
+provides: [Device]
 
 authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 

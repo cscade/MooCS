@@ -9,7 +9,7 @@ license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 requires: MooCS
 
-provides: Dictionary
+provides: [Dictionary]
 
 authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 
