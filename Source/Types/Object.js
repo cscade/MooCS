@@ -8,7 +8,7 @@ description: An extension library containing handy Object methods.
 license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 requires:
-	- Core/Object
+	- Core/Type
 
 provides: [Object.equal]
 

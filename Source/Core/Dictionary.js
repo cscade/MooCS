@@ -15,7 +15,7 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 
 ...
 */
-/*global $$, MooCS, Element, Class, Request, typeOf, JSChart */
+/*global MooCS */
 MooCS.Dictionary = {
 	cacheable: {
 		'sysname.dat': 	true,

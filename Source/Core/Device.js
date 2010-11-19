@@ -9,10 +9,8 @@ license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 requires:
 	- Core/Class
-	- Core/Element
 	- Core/Object
 	- Core/Request
-	- /MooCS
 	- /Dictionary
 
 provides: [Device]
@@ -21,7 +19,7 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 
 ...
 */
-/*global $$, MooCS, Element, Class, Request, typeOf, JSChart */
+/*global MooCS, Class, Request, typeOf */
 MooCS.Device = new Class({
 	
 	initialize: function (alias, location, startup) {
