@@ -13,7 +13,7 @@ copyright: "&copy; [Carson S. Christian](http://moocsinterface.net)"
 authors: "[Carson S. Christian](http://moocsinterface.net)"
 
 sources:
-  - "Source/Core/MooCS.js"
-  - "Source/Core/Device.js"
-  - "Source/Core/Dictionary.js"
-  - "Source/Types/Object.js"
+  - "Core/MooCS.js"
+  - "Core/Device.js"
+  - "Core/Dictionary.js"
+  - "Types/Object.js"

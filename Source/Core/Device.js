@@ -9,7 +9,9 @@ license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 requires:
 	- Core/Class
+	- Core/Element
 	- Core/Object
+	- Core/Request
 	- /MooCS
 	- /Dictionary
 
