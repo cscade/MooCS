@@ -1,5 +1,5 @@
 <?php
-/*	backend.php
+/*	cURL_translate.php
 	2010-10-19
 	Carson S. Christian
 	cchristian@moocsinterface.net
