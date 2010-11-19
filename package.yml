@@ -1,0 +1,19 @@
+name: "MooCS"
+
+exports: "moocs.js"
+
+web: "[moocsinterface.net](http://moocsinterface.net)"
+
+description: "A JavaScript application interface layer for the BCS series of automation controllers"
+
+license: "[Creative Commons Attribution-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/)"
+
+copyright: "&copy; [Carson S. Christian](http://moocsinterface.net)"
+
+authors: "[Carson S. Christian](http://moocsinterface.net)"
+
+sources:
+  - "Source/Core/MooCS.js"
+  - "Source/Core/Device.js"
+  - "Source/Core/Dictionary.js"
+  - "Source/Types/Object.js"

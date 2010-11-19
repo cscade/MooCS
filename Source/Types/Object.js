@@ -1,3 +1,21 @@
+/*
+---
+
+name: Object
+
+description: An extension library containing handy Object methods.
+
+license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
+
+requires:
+	- Core/Object
+
+provides: [Object.equal]
+
+authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
+
+...
+*/
 Object.implement({
 	equal: function (a, b) {
 		// Returns true if two objects have the same keys and values.

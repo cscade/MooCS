@@ -1,14 +1,19 @@
-/*	Dictionary.js
-	2010-10-19
-	Carson S. Christian
-	cchristian@moocsinterface.net
-	
-	Provides the translation dictionary for interpereting the BCS values.
-*/
 /*
-	This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
-	To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/
-	or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+---
+
+name: Dictionary
+
+description: Provides the translation dictionary for interpereting the BCS values.
+
+license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
+
+requires: MooCS
+
+provides: Dictionary
+
+authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
+
+...
 */
 /*global $$, MooCS, Element, Class, Request, typeOf, JSChart */
 MooCS.Dictionary = {

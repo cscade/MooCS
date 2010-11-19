@@ -1,22 +1,25 @@
-/*	MooCS.js
-	"Mooks": 
-	2010-10-19
-	Carson S. Christian
-	cchristian@moocsinterface.net
-	
-	Provides the MooCS namespace, and the MooCS.Device instance generator.
-*/
 /*
-	This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
-	To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/
-	or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+---
+
+name: Device
+
+description: The Device instance generator.
+
+license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
+
+requires:
+	- Core/Class
+	- Core/Object
+	- /MooCS
+	- /Dictionary
+
+provides: Device
+
+authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
+
+...
 */
 /*global $$, MooCS, Element, Class, Request, typeOf, JSChart */
-MooCS = {
-	$libraryVersion: '0.3-dev',
-	$instances: {}
-};
-
 MooCS.Device = new Class({
 	
 	initialize: function (alias, location, startup) {
@@ -143,7 +146,7 @@ MooCS.Device = new Class({
 			this.nextQueue(true);
 		} else {
 			r = new Request({
-				url: '/lib/php/backend.php',
+				url: '/Translation/cURL_translate.php',
 				data: Object.toQueryString({ location: this.location, target: decodeOpts.target, mode: 'get', message: null }),
 				method: 'get',
 				timeout: 5000,
@@ -345,7 +348,7 @@ MooCS.Device = new Class({
 				return;
 			}
 			r = new Request({
-				url: '/lib/php/backend.php',
+				url: '/Translation/cURL_translate.php',
 				data: Object.toQueryString({ location: this.location, target: structure, mode: 'get', message: null }),
 				method: 'get',
 				timeout: 5000,
