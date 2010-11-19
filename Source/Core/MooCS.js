@@ -13,7 +13,7 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 
 ...
 */
-MooCS = {
+this.MooCS = {
 	$libraryVersion: '0.3-dev',
 	$instances: {}
 };
