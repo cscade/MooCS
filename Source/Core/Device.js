@@ -117,13 +117,6 @@ MooCS.Device = new Class({
 		return true;
 	},
 	
-	hardRead: function (section, key, callback) {
-		// PUBLIC
-		// Clear the local cache, and then perform a normal read
-		delete this.responseCache[this.dictionary[section].target];
-		this.read(section, key, callback);
-	},
-	
 	performRead: function (section, key, callback) {
 		// PRIVATE
 		// This method is called by read()
