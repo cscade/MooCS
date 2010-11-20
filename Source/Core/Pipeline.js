@@ -18,15 +18,51 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 ...
 */
 MooCS.Pipeline = new Class({
-	
-	initialize: function (location, translator) {
-		this.deviceUrl = location;
-		this.translatorUrl = translator;
-		this.responseCache = {};
-		this.communications = { responseTimes: [], duplicatePolls: 0, timeouts: 0, exceptions: 0 };
+	Implements: [Options],
+	options: {
+		cacheAge : 500
 	},
 	
-	readRequest: function (decoder) {
+	initialize: function (location, translator, options) {
+		this.setOptions(options);
+		this.deviceUrl = location;
+		this.translatorUrl = translator;
+		this.requests = {};
+		this.cache = {};
+		this.commLog = { responseTimes: [], duplicatePolls: 0, timeouts: 0, exceptions: 0 };
+	},
+	
+	read: function (decoder) {
+		// Ask for data
+		if (this.checkCache(decoder.options.target)) {
+			decoder.go(this.getCache(decoder.options.target));
+			return;
+		}
+		this.generateRequest(decoder);
+	},
+	
+	checkCache: function (structure) {
+		// Return bool indicating cache availability for a structure
+		if (this.cache[structure] === undefined) {
+			return false;
+		} else if ((Date.now() - this.cache[structure].asOf) > this.options.cacheAge) {
+			delete this.cache[structure];
+			return false;
+		}
+		return true;
+	},
+	
+	updateCache: function (structure, response) {
+		// Update the inboard cache with a new response
+		this.cache[structure] = { asOf: Date.now(), value: response };
+	},
+	
+	getCache: function (structure) {
+		//  Return the currently cached response
+		return this.cache[structure].value;
+	},
+	
+	generateRequest: function (decoder) {
 		var request;
 		
 		var request = new Request({
@@ -35,22 +71,21 @@ MooCS.Pipeline = new Class({
 			method: 'get',
 			timeout: 5000,
 			onException: function () {
-				this.communications.exceptions += 1;
+				this.commLog.exceptions += 1;
 			}.bind(this),
 			onFailure: function () {
 				decoder.go('Request failed.');
 			},
 			onTimeout: function () {
-				this.communications.timeouts += 1;
+				this.commLog.timeouts += 1;
 				decoder.go('Request timed out.');
 			}.bind(this),
 			onSuccess: function (responseText) {
 				decoder.go(responseText);
-				// controller.responseCache[decodeOpts.target] = { asOf: Date.now(), value: responseText };
-				// Notify any listeners that the cache has been updated
-				// controller.cacheUpdated(decodeOpts.target);
-			}
+				this.updateCache(decoder.options.target, responseText);
+			}.bind(this)
 		});
+		request.send();
 	}
 	
 });
