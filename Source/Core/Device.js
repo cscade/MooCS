@@ -30,13 +30,11 @@ MooCS.Device = new Class({
 		this.location = location;
 		this.translator = translator;
 		// Locals
-		this.responseCache = {};
 		this.pollQueue = [];
 		this.reading = false;
 		this.polling = false;
 		this.listeners = {};
 		this.pollers = {};
-		this.communications = { responseTimes: [], duplicatePolls: 0, timeouts: 0, exceptions: 0 };
 		// Initial Dictionary (device detection only)
 		this.dictionary = {
 			system: {
@@ -52,6 +50,8 @@ MooCS.Device = new Class({
 				}
 			}
 		};
+		// Pipeline instance
+		this.pipeline = new MooCS.Pipeline(location, translator);
 		// Controller Identification
 		this.read('system', 'model', function (r) {
 			// r = 'BCS-462';
