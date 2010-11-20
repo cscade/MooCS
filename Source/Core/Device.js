@@ -22,11 +22,12 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 /*global MooCS, Class, Request, typeOf */
 MooCS.Device = new Class({
 	
-	initialize: function (alias, location, startup) {
+	initialize: function (alias, location, translator, startup) {
 		var controller = this;
 		
 		this.name = alias;
 		this.location = location;
+		this.translator = translator;
 		// Locals
 		this.responseCache = {};
 		this.pollQueue = [];
@@ -120,7 +121,7 @@ MooCS.Device = new Class({
 			callback.apply(callback, [decoded]);
 		} else {
 			r = new Request({
-				url: '/Translation/cURL_translate.php',
+				url: this.translator,
 				data: Object.toQueryString({ location: this.location, target: decodeOpts.target, mode: 'get', message: null }),
 				method: 'get',
 				timeout: 5000,
@@ -318,7 +319,7 @@ MooCS.Device = new Class({
 				return;
 			}
 			r = new Request({
-				url: '/Translation/cURL_translate.php',
+				url: this.translator,
 				data: Object.toQueryString({ location: this.location, target: structure, mode: 'get', message: null }),
 				method: 'get',
 				timeout: 5000,
