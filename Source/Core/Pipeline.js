@@ -35,10 +35,15 @@ MooCS.Pipeline = new Class({
 	read: function (decoder) {
 		// Ask for data
 		if (this.checkCache(decoder.options.target)) {
+			// Use cache if possible
 			decoder.go(this.getCache(decoder.options.target));
 			return;
 		}
-		this.generateRequest(decoder);
+		if (!this.checkRequests(decoder.options.target)) {
+			this.generateRequest(decoder);
+		} else {
+			// Watch existing
+		}
 	},
 	
 	checkCache: function (structure) {
@@ -62,30 +67,24 @@ MooCS.Pipeline = new Class({
 		return this.cache[structure].value;
 	},
 	
+	checkRequests: function (structure) {
+		// Determine if an existing request for this structure is queued
+		if (this.requests[structure] === undefined) {
+			return false;
+		}
+	},
+	
 	generateRequest: function (decoder) {
-		var request;
-		
 		var request = new Request({
 			url: this.translatorUrl,
 			data: Object.toQueryString({ location: this.deviceUrl, target: decoder.options.target, mode: 'get', message: null }),
-			method: 'get',
-			timeout: 5000,
-			onException: function () {
-				this.commLog.exceptions += 1;
-			}.bind(this),
-			onFailure: function () {
-				decoder.go('Request failed.');
-			},
-			onTimeout: function () {
-				this.commLog.timeouts += 1;
-				decoder.go('Request timed out.');
-			}.bind(this),
-			onSuccess: function (responseText) {
-				decoder.go(responseText);
-				this.updateCache(decoder.options.target, responseText);
-			}.bind(this)
+			method: 'get'			
 		});
-		request.send();
+		request.addEvent('success', function (r) {
+			decoder.go(r);
+			this.updateCache(decoder.options.target, responseText);
+		}.bind(this));
+		this.requests[decoder.options.target] = request;
 	}
 	
 });
