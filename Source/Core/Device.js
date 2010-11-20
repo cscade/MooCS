@@ -98,29 +98,17 @@ MooCS.Device = new Class({
 		// 	If notify is true, an update listener will automatically be added using the callback function provided.
 		// 	In that case, callback will execute every time the cached data changes.
 		// Note: This method will return cached data if available and the dictionary section is
-		// 	defined as cacheable. Cache is cleared on each write operation to that section. To force a hard read, use hardRead() instead.
-		var controller = this;
+		// 	defined as cacheable. Cache is cleared on each write operation to that section.
+		var controller = this,
+			readable = this.dictionary[section],
+			decodeOpts = readable[key],
+			r, decoded;
 		
-		if (this.dictionary[section] === undefined || this.dictionary[section][key] === undefined || typeOf(callback) !== 'function') {
+		if (typeOf(section) !== 'string' || typeOf(key) !== 'string' || this.dictionary[section] === undefined || this.dictionary[section][key] === undefined || typeOf(callback) !== 'function' || !decodeOpts) {
 			return false;
 		}
 		if (notify === true) {
 			this.addUpdateListener(section, key, callback);
-		}
-		this.performRead(section, key, callback);
-		return true;
-	},
-	
-	performRead: function (section, key, callback) {
-		// PRIVATE
-		// This method is called by read()
-		var readable = this.dictionary[section],
-			decodeOpts = readable[key],
-			controller = this,
-			r, decoded;
-			
-		if (typeOf(section) !== 'string' || typeOf(key) !== 'string' || typeOf(callback) !== 'function' || !decodeOpts) {
-			return null;
 		}
 		// Check local cache
 		// NOTE: Caching is "aggressive". Even if a section of the library is marked uncacheable, we will still return a cached result
@@ -160,6 +148,7 @@ MooCS.Device = new Class({
 				}
 			}).send();
 		}
+		return true;
 	},
 	
 	decode: function (raw, options) {
