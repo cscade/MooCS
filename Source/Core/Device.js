@@ -29,7 +29,6 @@ MooCS.Device = new Class({
 		this.location = location;
 		// Locals
 		this.responseCache = {};
-		this.requestQueue = [];
 		this.pollQueue = [];
 		this.reading = false;
 		this.polling = false;
@@ -104,16 +103,11 @@ MooCS.Device = new Class({
 		
 		if (this.dictionary[section] === undefined || this.dictionary[section][key] === undefined || typeOf(callback) !== 'function') {
 			return false;
-		}		
-		this.requestQueue.push(function () {
-			controller.performRead(section, key, callback);
-		});
+		}
 		if (notify === true) {
 			this.addUpdateListener(section, key, callback);
 		}
-		if (this.reading === false) {
-			this.nextQueue();
-		}
+		this.performRead(section, key, callback);
 		return true;
 	},
 	
@@ -136,7 +130,6 @@ MooCS.Device = new Class({
 		if (this.responseCache[decodeOpts.target] !== undefined && (MooCS.Dictionary.cacheable[decodeOpts.target] || this.responseCache[decodeOpts.target].asOf > (Date.now() - 500))) {
 			decoded = this.decode(this.responseCache[decodeOpts.target].value, decodeOpts);
 			callback.apply(callback, [decoded]);
-			this.nextQueue(true);
 		} else {
 			r = new Request({
 				url: '/Translation/cURL_translate.php',
@@ -145,20 +138,17 @@ MooCS.Device = new Class({
 				timeout: 5000,
 				onException: function () {
 					controller.communications.exceptions += 1;
-					controller.nextQueue();
 				},
 				onFailure: function () {
 					// Pass the failure through the decoder so we return an expected type
 					decoded = controller.decode('Request failed.', decodeOpts);
 					callback.apply(callback, [decoded]);
-					controller.nextQueue();
 				},
 				onTimeout: function () {
 					controller.communications.timeouts += 1;
 					// Pass the failure through the decoder so we return an expected type
 					decoded = controller.decode('Request timed out.', decodeOpts);
 					callback.apply(callback, [decoded]);
-					controller.nextQueue();
 				},
 				onSuccess: function (responseText) {
 					// Return the decoded response
@@ -167,8 +157,6 @@ MooCS.Device = new Class({
 					callback.apply(callback, [decoded]);
 					// Notify any listeners that the cache has been updated
 					controller.cacheUpdated(decodeOpts.target);
-					// Advance the queue
-					controller.nextQueue();
 				}
 			}).send();
 		}
@@ -378,25 +366,6 @@ MooCS.Device = new Class({
 	
 	encode: function () {
 		
-	},
-	
-	nextQueue: function (lastCached) {
-		// PRIVATE
-		// Execute the next request in the queue, if any
-		if (!lastCached) {
-			this.recordResponseTime(this.lastRequest);
-		}
-		if (this.requestQueue.length > 0) {
-			this.reading = true;
-			this.lastRequest = Date.now();
-			this.requestQueue.shift().apply(this);
-		} else {
-			this.reading = false;
-			this.lastRequest = undefined;
-		}
-		if (this.activityListener) {
-			this.activityListener(this.reading || this.polling);
-		}
 	},
 	
 	addToPollQueue: function (request) {
