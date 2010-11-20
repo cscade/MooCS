@@ -14,6 +14,7 @@ authors: "[Carson S. Christian](http://moocsinterface.net)"
 
 sources:
   - "Source/Core/MooCS.js"
+  - "Source/Core/Decoder.js"
   - "Source/Core/Device.js"
   - "Source/Core/Dictionary.js"
   - "Source/Core/Pipeline.js"
