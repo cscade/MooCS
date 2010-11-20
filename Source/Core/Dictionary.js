@@ -7,7 +7,7 @@ description: Provides the translation dictionary for interpereting the BCS value
 
 license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
-requires: MooCS
+requires: /MooCS
 
 provides: [Dictionary]
 

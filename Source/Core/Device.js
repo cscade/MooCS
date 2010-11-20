@@ -8,10 +8,11 @@ description: The Device instance generator.
 license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 requires:
+	- /MooCS
 	- Core/Class
 	- Core/Object
-	- Core/Request
 	- /Dictionary
+	- /Pipeline
 
 provides: [Device]
 

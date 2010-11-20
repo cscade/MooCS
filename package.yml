@@ -16,4 +16,5 @@ sources:
   - "Source/Core/MooCS.js"
   - "Source/Core/Device.js"
   - "Source/Core/Dictionary.js"
+  - "Source/Core/Pipeline.js"
   - "Source/Types/Object.js"
