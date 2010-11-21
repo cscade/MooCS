@@ -20,4 +20,5 @@ sources:
   - "Source/Core/Dictionary.js"
   - "Source/Core/Pipeline.js"
   - "Source/Core/Poll.js"
+  - "Source/Addons/Pipeline.js"
   - "Source/Types/Object.js"
