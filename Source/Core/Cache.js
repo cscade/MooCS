@@ -25,7 +25,7 @@ MooCS.Cache = new Class({
 		// onUpdate: function (structure, data) {} Fires whenever a new copy of a structure becomes available, regardless of it's cacheability
 	},
 	
-	initialize: function (location, translator, options) {
+	initialize: function () {
 		this.cache = {};
 	},
 	
