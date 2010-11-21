@@ -8,6 +8,7 @@ description: Caching mechanism for data structures.
 license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 requires:
+	- Core/Class.Extras
 	- /MooCS
 	- /Dictionary
 

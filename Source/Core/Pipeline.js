@@ -10,6 +10,7 @@ license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 requires:
 	- /MooCS
 	- /Cache
+	- Core/Class.Extras
 	- Core/Request
 
 provides: [Pipeline]
