@@ -8,8 +8,9 @@ description: Provides additional, optional functionality to the Pipeline class.
 license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 requires:
-	- More/Class.refactor
 	- /Pipeline
+	- More/Class.refactor
+	- More/Array.Extras
 
 provides: [Pipeline.Stats]
 
@@ -62,6 +63,20 @@ MooCS.Pipeline = Class.refactor(MooCS.Pipeline, {
 			this.stats.read.responseTimes.splice(0, 1);
 		}
 		this.stats.read.responseTimes.push((Date.now() - this.stats.read.lastRequestTime) / 1000);
+	},
+	
+	getAverages: function () {
+		// Return an object containing read/write averages
+		return {
+			read: {
+				average: this.stats.read.responseTimes.average().round(1),
+				samples: this.stats.read.responseTimes.length
+			},
+			write: {
+				average: this.stats.write.responseTimes.average().round(1),
+				samples: this.stats.write.responseTimes.length
+			}
+		};
 	}
 	
 });
