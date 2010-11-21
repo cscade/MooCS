@@ -64,14 +64,19 @@ MooCS.Pipeline = new Class({
 			data: Object.toQueryString({ location: this.deviceUrl, target: decoder.options.target, mode: 'get', message: null }),
 			method: 'get'			
 		});
+		this.attachEvents(request, decoder);
+		request.timeStamp = Date.now();
+		this.requests[decoder.options.target] = request;
+		this.start();
+	},
+	
+	attachEvents: function (request, decoder) {
+		// Attach events to the request
 		request.addEvent('success', function (r) {
 			decoder.go(r);
 			this.cache.update(decoder.options.target, r);
 			this.deleteCurrent();
 		}.bind(this));
-		request.timeStamp = Date.now();
-		this.requests[decoder.options.target] = request;
-		this.start();
 	},
 	
 	watchRequest: function (decoder) {
@@ -106,16 +111,26 @@ MooCS.Pipeline = new Class({
 		if (this.current !== undefined) {
 			var age = Date.now() - this.current.startTime;
 			if (age > this.options.timeout) {
-				this.deleteCurrent();
+				this.timeout();
 			}
 		} else {
 			if (Object.getLength(this.requests) > 0) {
 				this.current = { startTime: Date.now(), request: this.getNext() };
-				this.current.request.send();
+				this.send();
 			} else {
 				this.stop();
 			}
 		}
+	},
+	
+	send: function () {
+		// Sends the current request
+		this.current.request.send();
+	},
+	
+	timeout: function () {
+		// Perform operations on timed out request
+		this.deleteCurrent();
 	},
 	
 	start: function () {
