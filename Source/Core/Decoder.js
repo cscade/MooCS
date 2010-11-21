@@ -34,16 +34,6 @@ MooCS.Decoder = new Class({
 		if (typeOf(raw) !== 'string') {
 			return null;
 		}
-		if (raw === 'Request timed out.' || raw === 'Request failed.') {
-			// With the exception of string, we will return types that intentionally mismatch the target format, so they can be checked.
-			if (options.format === 'string') {
-				return raw;
-			} else if (options.format === 'number') {
-				return NaN;
-			} else if (options.format === 'boolean') {
-				return null;
-			}
-		}
 		if (options.format === 'string') {
 			if (options.encoding) {
 				if (options.encoding === 'hex') {
