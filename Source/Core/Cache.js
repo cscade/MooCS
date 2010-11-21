@@ -18,9 +18,10 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 ...
 */
 MooCS.Cache = new Class({
-	Implements: [Options],
+	Implements: [Options, Events],
 	options: {
 		age : 500
+		// onUpdate: function (structure, data) {} Fires whenever a new copy of a structure becomes available
 	},
 	
 	initialize: function (location, translator, options) {
@@ -47,6 +48,7 @@ MooCS.Cache = new Class({
 		// Update the inboard cache with a new response
 		if (!this.cacheable(structure)) return;
 		this.cache[structure] = { asOf: Date.now(), value: response };
+		this.fireEvent('update', [structure, response]);
 	},
 	
 	get: function (structure) {
