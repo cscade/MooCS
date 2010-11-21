@@ -9,6 +9,7 @@ license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 requires:
 	- /MooCS
+	- /Cache
 	- Core/Request
 
 provides: [Pipeline]
@@ -20,7 +21,6 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 MooCS.Pipeline = new Class({
 	Implements: [Options],
 	options: {
-		cacheAge : 500,
 		timeout: 5000
 	},
 	
@@ -29,14 +29,14 @@ MooCS.Pipeline = new Class({
 		this.deviceUrl = location;
 		this.translatorUrl = translator;
 		this.requests = {};
-		this.cache = {};
+		this.cache = new MooCS.Cache();
 	},
 	
 	read: function (decoder) {
 		// Ask for data
-		if (this.checkCache(decoder.options.target)) {
+		if (this.cache.check(decoder.options.target)) {
 			// Use cache if possible
-			decoder.go(this.getCache(decoder.options.target));
+			decoder.go(this.cache.get(decoder.options.target));
 			return;
 		}
 		if (this.checkRequests(decoder.options.target)) {
@@ -44,27 +44,6 @@ MooCS.Pipeline = new Class({
 		} else {
 			this.generateRequest(decoder);
 		}
-	},
-	
-	checkCache: function (structure) {
-		// Return bool indicating cache availability for a structure
-		if (this.cache[structure] === undefined) {
-			return false;
-		} else if ((Date.now() - this.cache[structure].asOf) > this.options.cacheAge) {
-			delete this.cache[structure];
-			return false;
-		}
-		return true;
-	},
-	
-	updateCache: function (structure, response) {
-		// Update the inboard cache with a new response
-		this.cache[structure] = { asOf: Date.now(), value: response };
-	},
-	
-	getCache: function (structure) {
-		//  Return the currently cached response
-		return this.cache[structure].value;
 	},
 	
 	checkRequests: function (structure) {
@@ -84,7 +63,7 @@ MooCS.Pipeline = new Class({
 		});
 		request.addEvent('success', function (r) {
 			decoder.go(r);
-			this.updateCache(decoder.options.target, r);
+			this.cache.update(decoder.options.target, r);
 			this.deleteCurrentRequest();
 		}.bind(this));
 		request.timeStamp = Date.now();
@@ -120,6 +99,7 @@ MooCS.Pipeline = new Class({
 	},
 	
 	runRequest: function () {
+		// The core check function. Determines if a request is in the pipeline, clears old requests, and stops the pipeline when idle.
 		if (this.current !== undefined) {
 			var age = Date.now() - this.current.startTime;
 			if (age > this.options.timeout) {
