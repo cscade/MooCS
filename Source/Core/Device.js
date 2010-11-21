@@ -23,10 +23,6 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 ...
 */
 /*global MooCS, Class, Request, typeOf */
-MooCS.new = function (alias, options, startup) {
-	return new MooCS.Device(alias, options, startup);
-};
-
 MooCS.Device = new Class({
 	Implements: [Options, Events],
 	options: {
@@ -41,8 +37,6 @@ MooCS.Device = new Class({
 		
 		this.setOptions(options);
 		this.name = alias;
-		this.location = location;
-		this.translator = translator;
 		// Locals
 		this.listeners = {};
 		// Initial Dictionary (device detection only)
@@ -61,7 +55,7 @@ MooCS.Device = new Class({
 			}
 		};
 		// Pipeline instance
-		this.pipeline = new MooCS.Pipeline(location, translator);
+		this.pipeline = new MooCS.Pipeline(this.options.location, this.options.translator);
 		this.pipeline.cache.addEvent('update', function (structure, data) {
 			// Update all listeners with new data
 			if (this.listeners[structure] !== undefined) {
