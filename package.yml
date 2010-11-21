@@ -19,4 +19,5 @@ sources:
   - "Source/Core/Device.js"
   - "Source/Core/Dictionary.js"
   - "Source/Core/Pipeline.js"
+  - "Source/Core/Poll.js"
   - "Source/Types/Object.js"
