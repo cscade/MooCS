@@ -23,11 +23,23 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 ...
 */
 /*global MooCS, Class, Request, typeOf */
+MooCS.new = function (alias, options, startup) {
+	return new MooCS.Device(alias, options, startup);
+};
+
 MooCS.Device = new Class({
+	Implements: [Options, Events],
+	options: {
+		location: '',
+		translator: ''
+		// onCommunication: function () {} Fires when the class opens a request to the BCS device
+		// onIdle: function () {} Fires when the class has no device communications pending
+	},
 	
-	initialize: function (alias, location, translator, startup) {
+	initialize: function (alias, options, startup) {
 		var controller = this;
 		
+		this.setOptions(options);
 		this.name = alias;
 		this.location = location;
 		this.translator = translator;
@@ -54,6 +66,11 @@ MooCS.Device = new Class({
 		};
 		// Pipeline instance
 		this.pipeline = new MooCS.Pipeline(location, translator);
+		// Events
+		this.pipeline.addEvents({
+			start: function () { controller.fireEvent('communication'); },
+			stop: function () { controller.fireEvent('idle'); }
+		});
 		// Controller Identification
 		this.read('system', 'model', function (r) {
 			// r = 'BCS-462';
