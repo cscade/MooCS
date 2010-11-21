@@ -19,9 +19,11 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 ...
 */
 MooCS.Pipeline = new Class({
-	Implements: [Options],
+	Implements: [Options, Events],
 	options: {
 		timeout: 5000
+		// onStart: function () {} Fires when Pipeline starts making requests
+		// onStop: function () {} Fires when pipeline completes all requests
 	},
 	
 	initialize: function (location, translator, options) {
@@ -125,12 +127,14 @@ MooCS.Pipeline = new Class({
 		this.runner = (function () {
 			host.run();
 		}).periodical(1);
+		this.fireEvent('start');
 	},
 	
 	stop: function () {
 		// Stop the pipeline
 		clearTimeout(this.runner);
 		delete this.runner;
+		this.fireEvent('stop');
 	}
 	
 });
