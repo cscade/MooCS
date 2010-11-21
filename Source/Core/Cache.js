@@ -20,8 +20,9 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 MooCS.Cache = new Class({
 	Implements: [Options, Events],
 	options: {
-		age : 500
-		// onUpdate: function (structure, data) {} Fires whenever a new copy of a structure becomes available
+		aggressive: true,		// Cache all structures 'aggressively', regardless of their cacheable flag
+		aggressiveAge : 500		// Un-cacheable structues that have been agressivley cached will expire after this age
+		// onUpdate: function (structure, data) {} Fires whenever a new copy of a structure becomes available, regardless of it's cacheability
 	},
 	
 	initialize: function (location, translator, options) {
@@ -35,9 +36,10 @@ MooCS.Cache = new Class({
 	
 	check: function (structure) {
 		// Return bool indicating cache availability for a structure
-		if (this.cacheable(structure) === false || this.cache[structure] === undefined) {
+		if (this.cache[structure] === undefined) {
 			return false;
-		} else if ((Date.now() - this.cache[structure].asOf) > this.options.age) {
+		} else if (this.cacheable(structure) === false && (Date.now() - this.cache[structure].asOf) > this.options.aggressiveAge) {
+			// Expire old aggressively cached structures
 			delete this.cache[structure];
 			return false;
 		}
@@ -46,9 +48,9 @@ MooCS.Cache = new Class({
 	
 	update: function (structure, response) {
 		// Update the inboard cache with a new response
-		if (!this.cacheable(structure)) return;
-		this.cache[structure] = { asOf: Date.now(), value: response };
 		this.fireEvent('update', [structure, response]);
+		if (!this.cacheable(structure) && this.options.aggressive !== true) return;
+		this.cache[structure] = { asOf: Date.now(), value: response };
 	},
 	
 	get: function (structure) {
