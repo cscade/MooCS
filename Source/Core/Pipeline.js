@@ -39,14 +39,14 @@ MooCS.Pipeline = new Class({
 			decoder.go(this.cache.get(decoder.options.target));
 			return;
 		}
-		if (this.checkRequests(decoder.options.target)) {
+		if (this.check(decoder.options.target)) {
 			this.watchRequest(decoder);
 		} else {
-			this.generateRequest(decoder);
+			this.generate(decoder);
 		}
 	},
 	
-	checkRequests: function (structure) {
+	check: function (structure) {
 		// Determine if an existing request for this structure is queued
 		if (this.requests[structure] === undefined) {
 			return false;
@@ -54,7 +54,7 @@ MooCS.Pipeline = new Class({
 		return true;
 	},
 	
-	generateRequest: function (decoder) {
+	generate: function (decoder) {
 		// Create a new request and and it to the queue
 		var request = new Request({
 			url: this.translatorUrl,
@@ -64,7 +64,7 @@ MooCS.Pipeline = new Class({
 		request.addEvent('success', function (r) {
 			decoder.go(r);
 			this.cache.update(decoder.options.target, r);
-			this.deleteCurrentRequest();
+			this.deleteCurrent();
 		}.bind(this));
 		request.timeStamp = Date.now();
 		this.requests[decoder.options.target] = request;
@@ -78,12 +78,12 @@ MooCS.Pipeline = new Class({
 		});
 	},
 	
-	deleteCurrentRequest: function () {
+	deleteCurrent: function () {
 		// Clear the current request from the pipeline
 		delete this.current;
 	},
 	
-	getNextRequest: function () {
+	getNext: function () {
 		// Return the oldest request in the queue
 		var age = null, oldest = undefined, key = null;
 		
@@ -98,16 +98,16 @@ MooCS.Pipeline = new Class({
 		return oldest;
 	},
 	
-	runRequest: function () {
+	run: function () {
 		// The core check function. Determines if a request is in the pipeline, clears old requests, and stops the pipeline when idle.
 		if (this.current !== undefined) {
 			var age = Date.now() - this.current.startTime;
 			if (age > this.options.timeout) {
-				this.deleteCurrentRequest();
+				this.deleteCurrent();
 			}
 		} else {
 			if (Object.getLength(this.requests) > 0) {
-				this.current = { startTime: Date.now(), request: this.getNextRequest() };
+				this.current = { startTime: Date.now(), request: this.getNext() };
 				this.current.request.send();
 			} else {
 				this.stop();
@@ -123,7 +123,7 @@ MooCS.Pipeline = new Class({
 			return;
 		}
 		this.runner = (function () {
-			host.runRequest();
+			host.run();
 		}).periodical(1);
 	},
 	
