@@ -9,6 +9,7 @@ license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 requires:
 	- /MooCS
+	- /Decoder
 	- /Cache
 	- Core/Class.Extras
 	- Core/Request

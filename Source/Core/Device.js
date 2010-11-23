@@ -92,7 +92,6 @@ MooCS.Device = new Class({
 	},
 	
 	getCapabilities: function () {
-		// PUBLIC
 		// Return an Object of the valid dictionary entries for read or write on this device.
 		// Object format is:
 		// 	{ section: [key, key, key, ...] }
@@ -110,7 +109,6 @@ MooCS.Device = new Class({
 	},
 	
 	read: function (section, key, callback, notify) {
-		// PUBLIC
 		// Return the requested value for the key in section to the callback function provided.
 		// Execute this.getCapabilities() for a dictionary of valid sections and keys.
 		// notify:
@@ -127,20 +125,12 @@ MooCS.Device = new Class({
 		return true;
 	},
 	
-	write: function (value, section, key) {
-		// PUBLIC
-		// Write the requested value to the key in section
-		// Clears any local cache for section as well
-		if (typeOf(value) !== 'string' || typeOf(section) !== 'string' || typeOf(key) !== 'string') {
-			return false;
-		}
-		delete this.responseCache[this.dictionary[section].target];
+	write: function () {
+		
 	},
 	
 	addUpdateListener: function (structure, decoder) {
-		// Call this method just like read().
-		// listener will be registered to be called whenever the structure that provides
-		// read values for section[key] becomes available.
+		// decoder will be registered to be called whenever the structure is updated.
 		// Returns false on bad arguments, true on listener added.
 		if (!instanceOf(decoder, MooCS.Decoder)) {
 			return false;
@@ -148,12 +138,11 @@ MooCS.Device = new Class({
 		if (this.listeners[structure] === undefined) {
 			this.listeners[structure] = [];
 		}
-		this.listeners[structure].push(decoder);
+		this.listeners[structure].include(decoder);
 		return true;
 	},
 	
 	removeUpdateListener: function (callback) {
-		// PUBLIC
 		// Remove the specified callback function.
 		// Returns false on bad arguments, undefined if callback doesn't exist, true on callback removed.
 		var removed = false;
