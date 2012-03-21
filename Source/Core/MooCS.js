@@ -13,7 +13,13 @@ authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
 
 ...
 */
-this.MooCS = {
-	$libraryVersion: '0.3.1-dev',
-	$instances: {}
-};
+!function (context) {
+	if (context.MooCS) return;
+	
+	var MooCS = function () {
+		this.$libraryVersion = '0.3.2';
+		this.$instances = {};
+	};
+	
+	context.MooCS = new MooCS();
+}(this);
