@@ -32,8 +32,8 @@ MooCS.Device = new Class({
 		// onIdle: function () {} Fires when the class has no device communications pending
 	},
 	
-	initialize: function (alias, options, startup) {
-		var controller = this;
+	initialize: function (alias, options, callback) {
+		var that = this;
 		
 		this.setOptions(options);
 		this.name = alias;
@@ -66,25 +66,25 @@ MooCS.Device = new Class({
 		}.bind(this));
 		// Events
 		this.pipeline.addEvents({
-			start: function () { controller.fireEvent('communication'); },
-			stop: function () { controller.fireEvent('idle'); }
+			start: function () { that.fireEvent('communication'); },
+			stop: function () { that.fireEvent('idle'); }
 		});
 		// Controller Identification
 		this.read('system', 'model', function (r) {
 			// r = 'BCS-462';
 			if (r === 'BCS-460') {
-				controller.BCS460 = true;
-				Object.merge(controller.dictionary, MooCS.Dictionary['460']);
+				that.BCS460 = true;
+				Object.merge(that.dictionary, MooCS.Dictionary['460']);
 			} else if (r === 'BCS-462') {
-				controller.BCS462 = true;
-				Object.merge(controller.dictionary,  MooCS.Dictionary['460'],  MooCS.Dictionary['462']);
+				that.BCS462 = true;
+				Object.merge(that.dictionary,  MooCS.Dictionary['460'],  MooCS.Dictionary['462']);
 			} else {
 				// Unsupported controller
-				alert('"' + controller.name + '" could not be contacted or controller detection returned an unknown controller type.\n\nCheck your network connectivity and verify that you are using a compatible controller model.');
+				alert('"' + that.name + '" could not be contacted or controller detection returned an unknown controller type.\n\nCheck your network connectivity and verify that you are using a compatible controller model.');
 				return;
 			}
-			if (typeOf(startup) === 'function') {
-				startup.apply(controller);
+			if (typeOf(callback) === 'function') {
+				callback.apply(that);
 			}
 		});
 		// Store instance reference
