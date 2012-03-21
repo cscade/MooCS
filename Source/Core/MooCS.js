@@ -9,7 +9,7 @@ license: Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
 provides: [MooCS]
 
-authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
+authors: [Carson S. Christian](mailto:cc@amplego.com)
 
 ...
 */

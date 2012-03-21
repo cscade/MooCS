@@ -38,4 +38,4 @@ Contact [Carson S. Christian][ccmail] with questions or comments.
 
 [ecc]: http://www.embeddedcontrolconcepts.com
 [moo]: http://www.mootools.net
-[ccmail]: mailto:cchristian@moocsinterface.net
+[ccmail]: mailto:cc@amplego.com

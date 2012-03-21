@@ -14,7 +14,7 @@ requires:
 
 provides: [Cache]
 
-authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
+authors: [Carson S. Christian](mailto:cc@amplego.com)
 
 ...
 */
