@@ -62,18 +62,18 @@ MooCS.Pipeline = Class.refactor(MooCS.Pipeline, {
 		if (this.stats.read.responseTimes.length > 59) {
 			this.stats.read.responseTimes.splice(0, 1);
 		}
-		this.stats.read.responseTimes.push((Date.now() - this.stats.read.lastRequestTime) / 1000);
+		this.stats.read.responseTimes.push((Date.now() - this.stats.read.lastRequestTime));
 	},
 	
 	getAverages: function () {
 		// Return an object containing read/write averages
 		return {
 			read: {
-				average: this.stats.read.responseTimes.average().round(1),
+				average: this.stats.read.responseTimes.average().round(0),
 				samples: this.stats.read.responseTimes.length
 			},
 			write: {
-				average: this.stats.write.responseTimes.average().round(1),
+				average: this.stats.write.responseTimes.average().round(0),
 				samples: this.stats.write.responseTimes.length
 			}
 		};
