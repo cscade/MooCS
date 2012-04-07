@@ -2,7 +2,7 @@
 /*	cURL_translate.php
 	2010-10-19
 	Carson S. Christian
-	cchristian@moocsinterface.net
+	cc@amplego.com
 	
 	Connection layer for BCS communication to/from an AJAX source.
 */

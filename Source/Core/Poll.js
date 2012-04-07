@@ -14,7 +14,7 @@ requires:
 
 provides: [Poll]
 
-authors: [Carson S. Christian](mailto:cchristian@moocsinterface.net)
+authors: [Carson S. Christian](mailto:cc@amplego.com)
 
 ...
 */
@@ -30,25 +30,25 @@ MooCS.Poll = new Class({
 	},
 	
 	run: function () {
-		var host = this;
+		var that = this;
 		// The main run loop. Executes every this.options.interval after calling start()
 		if (Object.getLength(this.device.listeners) < 1) return;
 		Object.each(this.device.listeners, function (listeners) {
 			listeners.each(function (decoder) {
-				host.device.pipeline.read(decoder);
+				that.device.pipeline.read(decoder);
 			});
 		});
 	},
 	
 	start: function () {
 		// Start the poller
-		var host = this;
+		var that = this;
 		
 		if (this.runner !== undefined) {
 			return;
 		}
 		this.runner = (function () {
-			host.run();
+			that.run();
 		}).periodical(this.options.interval);
 		this.fireEvent('start');
 	},
