@@ -17,7 +17,6 @@ authors: [Carson S. Christian](mailto:cc@amplego.com)
 	if (context.MooCS) return;
 	
 	var MooCS = function () {
-		this.$libraryVersion = '0.3.2';
 		this.$instances = {};
 	};
 	
