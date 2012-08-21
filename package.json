@@ -1,6 +1,6 @@
 {
     "name": "moocs-ajax",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "author": "Carson S. Christian <cc@amplego.com>",
     "description": "BCS device interface layer in ajax"
 }
